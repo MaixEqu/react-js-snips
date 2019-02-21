@@ -8,17 +8,22 @@ class App extends React.Component {
     super(props)
     this.textInput_1 = React.createRef();
     this.textInput_2 = React.createRef();
+    this.textInput_r = React.createRef();
     this.state = {
       value_1: 'val 1',
       value_2: 'val 2',
-      cols: 40,
+      cols1: 40,
+      cols2: 44,
       rows: 7,
     }
   }
 
   handleSubmit_1 = e => {
     e.preventDefault();
-    this.setState({ value_1: this.textInput_1.current.value})
+    console.log(e)
+    console.log(this.textInput_1)
+    console.log(this.textInput_r)
+    this.setState({ value_1: this.textInput_1.current.value, cols1: 44, cols2: 22 })
   };
   handleSubmit_2 = e => {
     e.preventDefault();
@@ -32,16 +37,21 @@ class App extends React.Component {
 
   render() {
     const s = this.state;
+    const t = `line1\nline2\nl3\nl-4\nline-5\n repeat: line1\nline2\nl3\nl-4\nline-5\n`
     return (
       <div>
-        <h3>React Ref - createRef (J2L, v.4+)</h3>
-        <textarea rows={s.rows} cols={s.cols} 
+        <h3>React Ref - createRef (J2L, v.5).<br /> Textareas properties tests</h3>
+        <textarea rows={s.rows} cols={s.cols1} 
           value={this.state.value_1} 
           onChange={this.handleOnChange} 
+          ref={this.textInput_r}
           readOnly={true} 
         />
         <form onSubmit={this.handleSubmit_1}>
-          <textarea rows={s.rows} cols={s.cols} ref={this.textInput_1} defaultValue="input-1" />
+          <textarea rows={s.rows} cols={s.cols2} 
+            ref={this.textInput_1} 
+            defaultValue={t}
+          />
           <br />
           <button>Submit</button>
         </form>
