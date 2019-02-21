@@ -10,27 +10,27 @@ class App extends React.Component {
     
     this.textInput = React.createRef();
     this.state = {
-      value: ''
+      value: 'here from input'
     }
   }
 
-handleSubmit = e => {
-  e.preventDefault();
-  this.setState({ value: this.textInput.current.value})
-};
+  handleSubmit = e => {
+    e.preventDefault();
+    this.setState({ value: this.textInput.current.value})
+  };
 
-render() {
-  return (
-    <div>
-      <h1>React Ref - createRef (J2L)</h1>
-      <h3>Value: {this.state.value}</h3>
-      <form onSubmit={this.handleSubmit}>
-        <input type="text" ref={this.textInput} />
-        <button>Submit</button>
-      </form>
-    </div>
-  );
-}
+  render() {
+    return (
+      <div>
+        <h1>React Ref - createRef (J2L, v.2)</h1>
+        <h3>Value: {this.state.value}</h3>
+        <form onSubmit={this.handleSubmit}>
+          <input type="text" ref={this.textInput} defaultValue="input default..." />
+          <button>Submit</button>
+        </form>
+      </div>
+    );
+  }
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));
