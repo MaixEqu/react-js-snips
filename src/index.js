@@ -1,42 +1,38 @@
 // sources:
-// https://stackoverflow.com/questions/49161441/react-js-how-to-access-component-by-id-and-call-its-method
-// https://codesandbox.io/s/6y9p69q0xw
+// https://stackoverflow.com/questions/37949981/call-child-method-from-parent
+// https://codesandbox.io/s/8lxr0pq179
 
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+import React, { forwardRef, useRef, useImperativeHandle } from "react";
+import { render } from "react-dom";
 
-const styles = {
-  fontFamily: 'sans-serif',
-  textAlign: 'center',
+// We need to wrap component in `forwardRef` in order to gain
+// access to the ref object that is assigned using the `ref` prop.
+// This ref is passed as the second parameter to the function component.
+const Child = forwardRef((props, ref) => {
+  // The component instance will be extended
+  // with whatever you return from the callback passed
+  // as the second argument
+  useImperativeHandle(ref, () => ({
+    getAlert() {
+      alert("getAlert from Child");
+    }
+  }));
+
+  return <h1>Hi Mx (J2L)</h1>;
+});
+
+const Parent = () => {
+  // In order to gain access to the child component instance,
+  // you need to assign it to a `ref`, so we call `useRef()` to get one
+  const childRef = useRef();
+
+  return (
+    <div>
+      <Child ref={childRef} />
+      <button onClick={() => childRef.current.getAlert()}>Click</button>
+    </div>
+  );
 };
 
-const ProgressBar = props => (
-  <div style={{ display: 'block', width: `${props.percentage}%`, height: 20, backgroundColor: '#ccc' }} />
-);
-
-class App extends Component {
-  state = {
-    percentage: 0,
-  }
-
-  componentDidMount() {
-    setInterval(() => {
-      let nextPercent = this.state.percentage+1;
-      if (nextPercent >= 100) {
-        nextPercent = 0;
-      }
-      this.setState({ percentage: nextPercent });
-    }, 100);
-  }
-
-  render() {
-    return (
-      <div style={styles}>
-        <h2>Progress bar (J2L)</h2>
-        <ProgressBar percentage={this.state.percentage} />
-      </div>
-    );
-  }
-}
-
-render(<App />, document.getElementById('root'));
+const rootElement = document.getElementById("root");
+render(<Parent />, rootElement);
