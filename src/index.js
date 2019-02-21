@@ -12,18 +12,22 @@ class App extends React.Component {
     this.state = {
       value_1: 'val 1',
       value_2: 'val 2',
-      cols1: 40,
+      cols1: 44,
       cols2: 44,
-      rows: 7,
+      rows: 11,
     }
   }
 
   handleSubmit_1 = e => {
     e.preventDefault();
-    console.log(e)
-    console.log(this.textInput_1)
-    console.log(this.textInput_r)
-    this.setState({ value_1: this.textInput_1.current.value, cols1: 44, cols2: 22 })
+    //console.log(e)
+    //console.log(this.textInput_r.current)
+    console.log(this.textInput_r.current.cols)
+    console.log(this.textInput_r.current.scrollTop)
+    //this.setState({ value_1: this.textInput_1.current.value, cols1: 44, cols2: 22 })
+    this.setState({ value_1: this.textInput_1.current.value + this.textInput_1.current.value })
+    this.textInput_r.current.cols = 60
+    this.textInput_r.current.scrollTop += 20
   };
   handleSubmit_2 = e => {
     e.preventDefault();
@@ -32,23 +36,28 @@ class App extends React.Component {
   handleOnChange = e => {
     //e.preventDefault();
     //alert("onChange")
-    return true;
+    //return true;
+    this.textInput_r.current.cols = 60
+    this.textInput_r.current.scrollTop += 20
   }
 
   render() {
     const s = this.state;
-    const t = `line1\nline2\nl3\nl-4\nline-5\n repeat: line1\nline2\nl3\nl-4\nline-5\n`
+    const t = `line1\nline2\nl3\nl-4\nline-5\n\nRepeat: line1\nline2\nl3\nl-4\nline-5\n`
     return (
       <div>
-        <h3>React Ref - createRef (J2L, v.5).<br /> Textareas properties tests</h3>
+        <h3>React Ref - createRef (J2L, v.6).<br /> Textareas properties tests</h3>
         <textarea rows={s.rows} cols={s.cols1} 
+          id="res"
           value={this.state.value_1} 
-          onChange={this.handleOnChange} 
+          onChange={this.handleOnChange}
+          onClick={this.handleOnChange}
           ref={this.textInput_r}
           readOnly={true} 
         />
         <form onSubmit={this.handleSubmit_1}>
           <textarea rows={s.rows} cols={s.cols2} 
+            id="from"
             ref={this.textInput_1} 
             defaultValue={t}
           />
